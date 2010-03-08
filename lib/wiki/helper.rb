@@ -184,7 +184,8 @@ module Wiki
     def edit_content(page)
       if params[:content]
         params[:content]
-      elsif page.content.encoding != __ENCODING__ || page.content =~ /[^[:print:]]/
+      ### WORKAROUND: removed regexp check because fail on creole files (why?)
+      elsif page.content.encoding != __ENCODING__ ### || page.content =~ /[^[:print:]]/
         :no_text_file.t(:page => page.path, :mime => page.mime)
       else
         page.content(params[:pos], params[:len])
