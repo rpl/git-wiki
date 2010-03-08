@@ -57,7 +57,6 @@ default_config = {
   :disabled_plugins => [
     'authorization/private_wiki',
     'tagging',
-    'filter/orgmode',
     'editor/antispam',
     'filter/benchmark',
   ],
