@@ -5,8 +5,6 @@ dependencies 'engine/filter'
 Filter.create :orgmode do |content|
   begin
     file = Tempfile.new('orgmode')
-    ### WORKAROUND: generated html will be titled with the tempfile name without an explicit title metadata
-    file.write("#+TITLE: #{context.resource.title}\n")
     file.write(content)
     file.close
 
@@ -17,6 +15,8 @@ Filter.create :orgmode do |content|
 
     result = File.read(file.path + '.html')
     result =~ /<body>(.*)<\/body>/m;
+    ### WORKAROUND: generated html will be titled with the tempfile name (remove it)
+    result =~ /<h1 class="title">#{File.basename file.path}<\/h1>(.*)/m;
     $1
   ensure
     File.unlink(file.path) rescue nil
